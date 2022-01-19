@@ -1,0 +1,137 @@
+<apex:page controller="UserStory" sidebar="false" docType="html-5.0" showHeader="false" tabStyle="Contact" title="Baby Dragon">
+    
+    <apex:form >
+        <apex:sectionHeader title="Project Management" />
+ 
+        <apex:pageBlock >
+            <div align="center">
+                <apex:commandButton value="Create User Story" action="{!showPopup}" reRender="popup" dir="right" status="status" />
+            </div>
+            
+            <apex:outputPanel id="popup">
+                
+                <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!displayPopUp}">
+                    
+                    <apex:pageblockSection >
+                        
+                        <apex:pageblockSectionItem >
+                            <apex:outputLabel value="Status" ></apex:outputLabel>
+                            <apex:inputField value="{!ustry.Status__c}" />
+                        </apex:pageblockSectionItem>
+                        
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Subject" ></apex:outputLabel>
+                            <apex:inputText value="{!ustry.User_Story_Subject__c}" label="Input"/>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Sprint" ></apex:outputLabel>
+                            <apex:inputField value="{!ustry.Sprint__c}" label="Input"/>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageblockSectionItem >
+                            <apex:outputLabel value="Assignee" ></apex:outputLabel>
+                            <apex:inputField value="{!ustry.Assignee__c}" />
+                        </apex:pageblockSectionItem>
+                        
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Project" ></apex:outputLabel>
+                            <apex:inputText value="{!ustry.Project__c}" label="Input"/>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Reporting Manager" ></apex:outputLabel>
+                            <apex:inputField value="{!ustry.Reporting_Manager__c}" label="Input"/>
+                        </apex:pageBlockSectionItem>
+                        
+                        
+                    </apex:pageblockSection>
+                    
+                    <div align="center" location ="bottom">
+                        
+                        <apex:commandButton value="Save" styleClass="closeButton" reRender="popup,sprint1" />
+                        <apex:commandButton value="Close Pop" title="Close the popup" action="{!closePopup}" styleClass="closeButton" rerender="popup" />
+                        
+                    </div>
+                    
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        
+        
+        
+        <!-- old -->
+        
+        
+        <apex:pageBlock >
+            
+            <apex:pageBlockButtons location="bottom"  >
+                
+                <apex:commandButton value="Move to backlog" action="{!MoveBacklog}" rerender="table3,table1"/>
+                <apex:commandButton value="Move to other Sprint" action="{!MoveToSprint}" rerender="table2,table1"/>
+                <apex:commandButton value="Cancel"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageblockSection title="Sprint 1" collapsible="false" columns="1">                
+                <apex:pageBlockTable value="{!Sprint1}" var="Wrap" id="table1" title="Sprint 1 List">
+                    
+                    <apex:column >
+                        <apex:inputCheckbox value="{!Wrap.selected}" id="inputId"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="User Name" value="{!Wrap.usr.Name}" />
+                    <apex:column headerValue="Sprint " value="{!Wrap.usr.Sprint__c}" /> 
+                    <apex:column headerValue="Subject" value="{!Wrap.usr.User_Story_Subject__c}" /> 
+                    <apex:column headerValue="Project" value="{!Wrap.usr.Project__c}" />
+                    <apex:column headerValue="Status" value="{!Wrap.usr.Label__c}" /> 
+                    <apex:column headerValue="Reporting Manager" value="{!Wrap.usr.Reporting_Manager__c}" /> 
+                    
+                </apex:pageBlockTable>                          
+                
+            </apex:pageblockSection>
+        </apex:pageBlock>
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="bottom" >
+                <apex:commandButton value="Move to backlog" action="{!MoveBacklog}" rerender="table2"/>
+                <apex:commandButton value="Move to other Sprint" action="{!MoveToSprint}" rerender="table2,table1"/>
+                <apex:commandButton value="Cancel"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageblockSection title="Sprint 2" collapsible="false" columns="1">                
+                <apex:pageBlockTable value="{!Sprint2}" var="Wrap" id="table2" title="All Contacts">
+                    <apex:column >
+                        <apex:inputCheckbox value="{!Wrap.selected}" id="inputId"/>
+                    </apex:column>
+                    <apex:column headerValue="User Name" value="{!Wrap.usr.Name}" />
+                    <apex:column headerValue="Sprint " value="{!Wrap.usr.Sprint__c}" /> 
+                    <apex:column headerValue="Subject" value="{!Wrap.usr.User_Story_Subject__c}" /> 
+                    <apex:column headerValue="Project" value="{!Wrap.usr.Project__c}" />
+                    <apex:column headerValue="Status" value="{!Wrap.usr.Label__c}" /> 
+                    <apex:column headerValue="Reporting Manager" value="{!Wrap.usr.Reporting_Manager__c}" /> 
+                    
+                </apex:pageBlockTable>                          
+                
+            </apex:pageblockSection>
+        </apex:pageBlock>
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="bottom" >
+                <apex:commandButton value="Move to Sprint" action="{!MoveToSprint}" rerender="table3"/>
+                <apex:commandButton value="Cancel"/>
+                
+            </apex:pageBlockButtons>
+            <apex:pageblockSection title="Backlog" collapsible="false" columns="1">    
+                
+                <apex:pageBlockTable value="{!backlog}" var="Wrap" id="table3" title="Backlog">
+                    <apex:column >
+                        <apex:inputCheckbox value="{!Wrap.selected}" id="inputId2"/>
+                    </apex:column>
+                    <apex:column headerValue="User Name" value="{!Wrap.usr.Name}" />
+                    <apex:column headerValue="Subject" value="{!Wrap.usr.User_Story_Subject__c}" />
+                    
+                </apex:pageBlockTable>                          
+                
+            </apex:pageblockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>
