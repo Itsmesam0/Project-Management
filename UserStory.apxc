@@ -1,0 +1,90 @@
+public class UserStory {
+    
+    public List<wrapUser> wrapUserList{get; set;}
+    public List<wrapUser> selectedlist{get;set;}
+    public List<wrapUser> backlog{get;set;}
+    public List<wrapUser> sprint1{get;set;}
+    public List<wrapUser> sprint2{get;set;}
+    public list<wrapUser> MoveBacklog{get;set;}
+    public list<wrapUser> MoveToSprint{get;set;}
+    
+    public boolean displaypopup {set;get;}        // Pop-up Display
+    public User_Story__c ustry {set;get;}     // Creating new record in Pop-up
+    
+    
+    
+    public UserStory(){
+        wrapUserList = new List<wrapUser>();
+        list<User_Story__c> uslist = [SELECT Name, Sprint__c, User_Story_Subject__c, Project__c, Reporting_Manager__c, Label__c  FROM User_Story__c];
+        for(User_Story__c usr:uslist){
+            if(usr.Sprint__c!=null){
+                wrapUser obj= new wrapUser(usr);
+                obj.selected=false;
+                wrapUserList.add(obj);
+                
+            }
+        }
+        backlog = new list<wrapUser>();
+        for(User_Story__c usr:uslist){
+            if(usr.Sprint__c==null){
+                wrapUser obj= new  wrapUser(usr) ;
+                obj.selected= false;
+                backlog.add(obj);
+            }
+            
+        }
+        Sprint1 = new list<wrapUser>();
+        for(User_Story__c usr:uslist){
+            if(usr.Sprint__c =='a065j000000hISSAA2'){
+                wrapUser obj =new wrapUser(usr);
+                obj.selected= false;
+                Sprint1.add(obj);
+            }
+        }
+        Sprint2 = new list<wrapUser>();
+        for(User_Story__c usr:uslist){
+            if(usr.Sprint__c=='a065j000000hISgAAM'){
+                wrapUser obj =new wrapUser(usr);
+                obj.selected= false;
+                Sprint2.add(obj);
+                
+                
+            }
+        }
+    }
+    public void MoveBacklog(){
+        Sprint1 = new list<wrapUser>();
+        for(wrapUser ss:wrapUserList){
+            if(ss.selected==true&& ss.usr.Sprint__c==null ){
+                backlog.add(ss);
+                
+            }
+        }
+    }
+    public void MoveToSprint(){       
+    }
+    
+    public class wrapUser{
+        public User_Story__c usr{get; set;}
+        public Boolean selected {get; set;}        
+        public wrapUser(User_Story__c usr){
+            this.usr = usr;
+            selected = false;
+        }
+    }
+    
+    public void showpopup(){ 
+        displaypopup=true;          
+    }
+     public void closepopup(){
+        displaypopup=false;    
+    }
+    public PageReference saveus(){
+        displaypopup=false;    
+       
+        insert ustry;        // insert the new record for User_Story__c
+        return null;
+    }
+   
+    
+}
