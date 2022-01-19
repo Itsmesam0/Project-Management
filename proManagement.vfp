@@ -3,7 +3,7 @@
     <apex:form >
         <apex:sectionHeader title="Project Management" />
  
-        <apex:pageBlock >
+        <apex:pageBlock sec>
             <div align="center">
                 <apex:commandButton value="Create User Story" action="{!showPopup}" reRender="popup" dir="right" status="status" />
             </div>
